@@ -1,9 +1,6 @@
-import { PLAYER, STATUS } from '../constants';
-import { createEmptyField } from '../utils';
+import { store } from '../store';
 
-export const handleRestart = ({ setField, setStatus, setCurrentPlayer}) => {
-		setStatus(STATUS.TURN);
-		setCurrentPlayer(PLAYER.CROSS);
-		setField(createEmptyField());
-	};
 
+export const handleRestart = () => {
+	store.dispatch({ type: 'SET_GAME_RESTART'});
+};

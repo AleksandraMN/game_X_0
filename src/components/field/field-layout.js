@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import { PLAYER, PLAYER_SIGN } from '../../constants';
+import {handleCellClick} from '../../handlers/handle-cell-click';
 import styles from './field.module.css';
 
-export const FieldLayout = ({ field, handleCellClick }) => {
+export const FieldLayout = ({ field }) => {
 	return (
 		<div className={styles.field}>
 			{field.map((cellPlayer, index) => (
@@ -16,5 +17,4 @@ export const FieldLayout = ({ field, handleCellClick }) => {
 
 FieldLayout.propTypes = {
 	field: PropTypes.arrayOf(PropTypes.oneOf([PLAYER.CROSS, PLAYER.NOBODY, PLAYER.NOUGHT])),
-	handleCellClick: PropTypes.func,
 };

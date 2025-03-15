@@ -1,13 +1,20 @@
-import PropTypes from 'prop-types';
-import { PLAYER } from "../../constants";
 import { FieldLayout } from "./field-layout";
+import { useEffect, useState } from 'react';
+import { store } from '../../store';
 
-export const Field = ({handleCellClick, field}) => {
+export const Field = () => {
+	const [state, setState] = useState(store.getState());
+	const {field} = state;
 
-	return <FieldLayout field={field} handleCellClick={handleCellClick} />
-};
+  useEffect(() => {
+    const unsubscribe = store.subscribe((newState) => {
+      setState(newState);
+    });
 
-Field.propTypes = {
-	field: PropTypes.arrayOf(PropTypes.oneOf([PLAYER.CROSS, PLAYER.NOBODY, PLAYER.NOUGHT])),
-	handleCellClick: PropTypes.func,
+    store.dispatch({ type: 'SET_GAME_DATA'});
+
+    return unsubscribe; 
+  }, []);
+
+	return <FieldLayout field={field} />
 };
