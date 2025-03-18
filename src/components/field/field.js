@@ -1,13 +1,40 @@
-import PropTypes from 'prop-types';
-import { PLAYER } from "../../constants";
-import { FieldLayout } from "./field-layout";
+import { PLAYER, STATUS } from '../../constants';
+import { FieldLayout } from './field-layout';
+import { useReduxState, useDispatch } from '../../redux-manager';
+import {checkWin, checkEmptyCell } from '../../utils';
+import {setCurrentPlayer, setField, setStatus} from '../../actions';
 
-export const Field = ({handleCellClick, field}) => {
+export const Field = () => {
+	const { status, currentPlayer, field } = useReduxState();
+	const dispatch = useDispatch();
 
-	return <FieldLayout field={field} handleCellClick={handleCellClick} />
+	const handleCellClick = (cellIndex) => {
+		if (
+			status === STATUS.WIN ||
+			status === STATUS.DRAW ||
+			field[cellIndex] !== PLAYER.NOBODY
+		) {
+			return;
+		}
+
+		const newField = [...field];
+		newField[cellIndex] = currentPlayer;
+
+		dispatch(setField(newField));
+
+		if (checkWin(newField, currentPlayer)) {
+			dispatch(setStatus(STATUS.WIN));
+		} else if (checkEmptyCell(newField)) {
+			const newCurrentPlayer = currentPlayer === PLAYER.CROSS ? PLAYER.NOUGHT : PLAYER.CROSS;
+			dispatch(setCurrentPlayer(newCurrentPlayer));
+		} else {
+			dispatch(setStatus(STATUS.DRAW));
+		}
+	};
+
+
+	return <FieldLayout field={field} handleCellClick={handleCellClick} />;
+
 };
 
-Field.propTypes = {
-	field: PropTypes.arrayOf(PropTypes.oneOf([PLAYER.CROSS, PLAYER.NOBODY, PLAYER.NOUGHT])),
-	handleCellClick: PropTypes.func,
-};
+
