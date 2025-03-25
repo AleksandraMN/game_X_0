@@ -1,11 +1,15 @@
 import { PLAYER, STATUS } from '../../constants';
 import { FieldLayout } from './field-layout';
-import { useReduxState, useDispatch } from '../../redux-manager';
+// import { useReduxState, useDispatch } from '../../redux-manager';
 import {checkWin, checkEmptyCell } from '../../utils';
 import {setCurrentPlayer, setField, setStatus} from '../../actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const Field = () => {
-	const { status, currentPlayer, field } = useReduxState();
+	const status = useSelector(state => state.status);
+	const currentPlayer = useSelector(state => state.currentPlayer);
+	const field = useSelector(state => state.field);
+	
 	const dispatch = useDispatch();
 
 	const handleCellClick = (cellIndex) => {
