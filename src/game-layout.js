@@ -1,20 +1,20 @@
-import { Field, Information } from './components';
-import styles from './game.module.css';
+import { Component } from 'react';
+import  {Field, Information}  from './components';
 import PropTypes from 'prop-types';
 
-export const GameLayout = ({handleRestart}) => {
-	return (
-		<div className={styles.game}>
-			<Information  />
-			<Field  />
-			<button className={styles.restartButton} onClick={handleRestart}>
-				Начать заново
-			</button>
-		</div>
-	);
+export class GameLayout extends Component {
+	render() {
+		const { handleRestart } = this.props;
+		return (
+			<div className="flex mt-12 mb-12 mx-auto w-25 flex-col items-center">
+				<Information />
+				<Field />
+				<button className="button" onClick={handleRestart}>Начать заново</button>
+			</div>
+		);
+	}
 };
 
 GameLayout.propTypes = {
-	handleCellClick: PropTypes.func,
+	handleRestart: PropTypes.func,
 };
-

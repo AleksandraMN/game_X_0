@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
+import { Component } from 'react';
 
-export const InformationLayout = ({information}) => {
-	return (
-	  <div>{information}</div>
-  );
-};
+export class InformationLayout extends Component {
+	render() {
+		const { information } = this.props;
+		return <div>{information}</div>;
+	}
+}
 
 InformationLayout.propTypes = {
-  information: PropTypes.string,
+	information: PropTypes.string,
 };
